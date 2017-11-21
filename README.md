@@ -29,7 +29,7 @@ To run it on folder:
     
 If you don't give arguments, it will prompt for the path.
 
-The annotated dictionary is stored as json and it gets updated every time, 
+The annotated dictionary is stored as [json](./cdli_mpa_tool/annotated_morph_dict.json) and it gets updated every time, 
 so you can copy it from the path and share it.
 
 Its structure is (FORM: [[SEGM1	XPOSTAG1], [SEGM2	XPOSTAG2]]):
