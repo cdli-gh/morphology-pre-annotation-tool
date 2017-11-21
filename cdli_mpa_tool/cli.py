@@ -10,8 +10,14 @@ JSON_PATH = os.path.join(ROOT_DIR, 'annotated_morph_dict.json')
 
 def load_annotations(infile):
     click.echo('Loading annotations from {0}.'.format(infile))
-    with codecs.open(infile, 'r', 'utf-8') as jsonfile:
-        loaded_dict = json.load(jsonfile)
+    try:
+        with codecs.open(infile, 'r', 'utf-8') as jsonfile:
+            loaded_dict = json.load(jsonfile)
+    except IOError:
+        click.echo('First time usage : creating annotation json dictionary file as {0}.'.format(infile))
+        store_annotations(infile, {})
+        with codecs.open(infile, 'r', 'utf-8') as jsonfile:
+            loaded_dict = json.load(jsonfile)
     return loaded_dict
 
 
