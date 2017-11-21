@@ -16,8 +16,38 @@ Here are [installation instructions](https://pip.pypa.io/en/stable/installing/).
 
 Simply run:
 
+```bash
+    $ git clone https://github.com/cdli-gh/morphology-pre-annotation-tool.git
+    $ cd morphology-pre-annotation-tool
     $ pip install .
+```
+    
+Or you can just do 
 
+    $ pip install git+git://github.com/cdli-gh/morphology-pre-annotation-tool.git
+    
+Or you can also do  
+
+    $ pip install git+https://github.com/cdli-gh/morphology-pre-annotation-tool.git   
+    
+# Upgrading
+    
+If you already have installed it and want to upgrade the tool:
+
+```bash
+    $ cd morphology-pre-annotation-tool
+    $ git pull origin master
+    $ pip install . --upgrade
+```    
+
+Or you can just do 
+
+    $ pip install git+git://github.com/cdli-gh/morphology-pre-annotation-tool.git --upgrade
+    
+Or you can also do  
+
+    $ pip install git+https://github.com/cdli-gh/morphology-pre-annotation-tool.git --upgrade
+    
 
 # Usage
 
