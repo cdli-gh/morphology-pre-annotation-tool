@@ -8,21 +8,23 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 JSON_PATH = os.path.join(ROOT_DIR, 'annotated_morph_dict.json')
 
 
-def load_annotations(infile):
-    click.echo('Loading annotations from {0}.'.format(infile))
+def load_annotations(infile, verbose=False):
+    if verbose:
+        click.echo('Loading annotations from {0}.'.format(infile))
     try:
         with codecs.open(infile, 'r', 'utf-8') as jsonfile:
             loaded_dict = json.load(jsonfile)
     except IOError:
         click.echo('First time usage : creating annotation json dictionary file as {0}.'.format(infile))
-        store_annotations(infile, {})
+        store_annotations(infile, {}, verbose)
         with codecs.open(infile, 'r', 'utf-8') as jsonfile:
             loaded_dict = json.load(jsonfile)
     return loaded_dict
 
 
-def store_annotations(outfile, loaded_dict):
-    click.echo('Storing annotations in {0}.'.format(outfile))
+def store_annotations(outfile, loaded_dict, verbose=False):
+    if verbose:
+        click.echo('Storing annotations in {0}.'.format(outfile))
     with codecs.open(outfile, 'wb', 'utf-8') as jsonfile:
         json.dump(loaded_dict, jsonfile, indent=2)
 
@@ -44,38 +46,42 @@ def line_process(line, loaded_dict):
     return line+'\n'
 
 
-def file_process(infile):
-    loaded_dict = load_annotations(JSON_PATH)
+def file_process(infile, verbose=False):
+    loaded_dict = load_annotations(JSON_PATH, verbose=False)
     infile_seperated = infile.split('.')
     outfile_name = ".".join(infile_seperated[:-1] + ['tsv'])
-    click.echo('Writing in {0}.'.format(outfile_name))
+    if verbose:
+        click.echo('Writing in {0}.'.format(outfile_name))
     with click.open_file(infile, 'rb') as f:
         lines = f.readlines()
         with click.open_file(outfile_name, 'w+') as f1:
             for line in lines:
                 line = line_process(line, loaded_dict)
                 f1.writelines(line)
-    store_annotations(JSON_PATH, loaded_dict)
+    store_annotations(JSON_PATH, loaded_dict, verbose)
 
 
-def check_and_process(pathname):
+def check_and_process(pathname, verbose=False):
     mode = os.stat(pathname)[ST_MODE]
     if S_ISREG(mode) and pathname.lower().endswith('.conll'):
         # It's a file, call the callback function
-        click.echo('Processing {0}.'.format(pathname))
-        file_process(pathname)
+        if verbose:
+            click.echo('Processing {0}.'.format(pathname))
+        file_process(pathname, verbose)
 
 
 @click.command()
 @click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True, help='Input the file/folder name.')
-def main(input_path):
+@click.option('-v', '--verbose', default=False, required=False, is_flag=True, help='Enables verbose mode')
+def main(input_path, verbose):
     """My Tool does one thing, and one thing well."""
     if os.path.isdir(input_path):
-        for f in os.listdir(input_path):
-            pathname = os.path.join(input_path, f)
-            check_and_process(pathname)
+        with click.progressbar(os.listdir(input_path), label='Annotating the files') as bar:
+            for f in bar:
+                pathname = os.path.join(input_path, f)
+                check_and_process(pathname, verbose)
     else:
-        check_and_process(input_path)
+        check_and_process(input_path, verbose)
 
 
 
