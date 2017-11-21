@@ -1,16 +1,22 @@
 # Morphology Pre-annotation Tool
 
-My Tool does one thing, and one thing well.
+*My Tool does one thing, and one thing well.*
+
+In order to ease manually tagging our texts for the gold corpus, 
+a pre-annotation tool which takes into account existing annotated 
+texts has been designed. This tool fills in unambiguous fields for 
+each word and propose alternatives in columns following the CDLI-CoNLL 
+columns for the user to copy and paste the best choice.
 
 
 # Installation
 
-If you don't use `pipsi`, you're missing out.
-Here are [installation instructions](https://github.com/mitsuhiko/pipsi#readme).
+If you don't use `pip`, you're missing out.
+Here are [installation instructions](https://pip.pypa.io/en/stable/installing/).
 
 Simply run:
 
-    $ pipsi install .
+    $ pip install .
 
 
 # Usage
