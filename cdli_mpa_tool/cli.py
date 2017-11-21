@@ -18,7 +18,7 @@ def load_annotations(infile):
 def store_annotations(outfile, loaded_dict):
     click.echo('Storing annotations in {0}.'.format(outfile))
     with codecs.open(outfile, 'wb', 'utf-8') as jsonfile:
-        json.dump(loaded_dict, jsonfile)
+        json.dump(loaded_dict, jsonfile, indent=2)
 
 
 def line_process(line, loaded_dict):
