@@ -25,7 +25,7 @@ def load_annotations(infile, verbose=False):
 def store_annotations(outfile, loaded_dict, verbose=False):
     if verbose:
         click.echo('Storing annotations in {0}.'.format(outfile))
-    with codecs.open(outfile, 'wb', 'utf-8') as jsonfile:
+    with codecs.open(outfile, 'w', 'utf-8') as jsonfile:
         json.dump(loaded_dict, jsonfile, indent=2)
 
 
@@ -52,7 +52,7 @@ def file_process(infile, verbose=False):
     outfile_name = ".".join(infile_seperated[:-1] + ['tsv'])
     if verbose:
         click.echo('Writing in {0}.'.format(outfile_name))
-    with click.open_file(infile, 'rb') as f:
+    with click.open_file(infile, 'r') as f:
         lines = f.readlines()
         with click.open_file(outfile_name, 'w+') as f1:
             for line in lines:
