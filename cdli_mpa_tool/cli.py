@@ -5,7 +5,12 @@ import os
 from stat import *
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-JSON_PATH = os.path.join(ROOT_DIR, 'annotated_morph_dict.json')
+HOME_DIR = os.environ['HOME']
+if HOME_DIR:
+    FOLDER = os.path.join(HOME_DIR, '.cdlimpatool')
+    JSON_PATH = os.path.join(FOLDER, 'annotated_morph_dict.json')
+else:
+    JSON_PATH = os.path.join(ROOT_DIR, 'annotated_morph_dict.json')
 
 
 def load_annotations(infile, verbose=False):
@@ -16,6 +21,8 @@ def load_annotations(infile, verbose=False):
             loaded_dict = json.load(jsonfile)
     except IOError:
         click.echo('First time usage : creating annotation json dictionary file as {0}.'.format(infile))
+        if not os.path.exists(FOLDER):
+            os.makedirs(FOLDER)
         store_annotations(infile, {}, verbose)
         with codecs.open(infile, 'r', 'utf-8') as jsonfile:
             loaded_dict = json.load(jsonfile)
@@ -50,7 +57,7 @@ def file_process(infile, verbose=False, no_output=False):
     loaded_dict = load_annotations(JSON_PATH, verbose)
     infile_seperated = infile.split('.')
     outfile_name = ".".join(infile_seperated[:-1] + ['tsv'])
-    if verbose:
+    if verbose and not no_output:
         click.echo('Writing in {0}.'.format(outfile_name))
     with codecs.open(infile, 'r', 'utf-8') as f:
         lines = f.readlines()
