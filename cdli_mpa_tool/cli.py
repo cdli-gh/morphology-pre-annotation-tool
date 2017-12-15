@@ -43,7 +43,7 @@ def line_process(line, loaded_dict):
                 line_next = loaded_dict[form][0]
                 line_splitted += line_next
                 line = '\t'.join(line_splitted)
-    return line+'\n'
+    return line + '\n'
 
 
 def file_process(infile, verbose=False, no_output=False):
@@ -75,8 +75,10 @@ def check_and_process(pathname, verbose=False, no_output=False):
 
 
 @click.command()
-@click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True, help='Input the file/folder name.')
-@click.option('--no_output', '-n',  default=False, required=False, is_flag=True, help='Disables output for filling dictionary only')
+@click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True,
+              help='Input the file/folder name.')
+@click.option('--no_output', '-n', default=False, required=False, is_flag=True,
+              help='Disables output for filling dictionary only')
 @click.option('-v', '--verbose', default=False, required=False, is_flag=True, help='Enables verbose mode')
 @click.version_option()
 def main(input_path, no_output, verbose):
@@ -88,6 +90,3 @@ def main(input_path, no_output, verbose):
                 check_and_process(pathname, verbose, no_output)
     else:
         check_and_process(input_path, verbose, no_output)
-
-
-
