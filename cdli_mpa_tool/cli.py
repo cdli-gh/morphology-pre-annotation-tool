@@ -38,7 +38,7 @@ def line_process(line, loaded_dict):
             if form not in loaded_dict:
                 loaded_dict[form] = []
             if len(line_splitted) > 2:
-                loaded_dict[form].append(line[2:])
+                loaded_dict[form].append(line_splitted[2:])
             elif len(loaded_dict[form]) >= 1:
                 line_next = loaded_dict[form][0]
                 line_splitted += line_next
@@ -46,42 +46,48 @@ def line_process(line, loaded_dict):
     return line+'\n'
 
 
-def file_process(infile, verbose=False):
-    loaded_dict = load_annotations(JSON_PATH, verbose=False)
+def file_process(infile, verbose=False, no_output=False):
+    loaded_dict = load_annotations(JSON_PATH, verbose)
     infile_seperated = infile.split('.')
     outfile_name = ".".join(infile_seperated[:-1] + ['tsv'])
     if verbose:
         click.echo('Writing in {0}.'.format(outfile_name))
-    with click.open_file(infile, 'r') as f:
+    with codecs.open(infile, 'r', 'utf-8') as f:
         lines = f.readlines()
-        with click.open_file(outfile_name, 'w+') as f1:
+        with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
             for line in lines:
                 line = line_process(line, loaded_dict)
-                f1.writelines(line)
+                if not no_output:
+                    try:
+                        f1.writelines(line)
+                    except Exception:
+                        click.echo('Could not write the following line. {0}.'.format(line))
     store_annotations(JSON_PATH, loaded_dict, verbose)
 
 
-def check_and_process(pathname, verbose=False):
+def check_and_process(pathname, verbose=False, no_output=False):
     mode = os.stat(pathname)[ST_MODE]
     if S_ISREG(mode) and pathname.lower().endswith('.conll'):
         # It's a file, call the callback function
         if verbose:
             click.echo('Processing {0}.'.format(pathname))
-        file_process(pathname, verbose)
+        file_process(pathname, verbose, no_output)
 
 
 @click.command()
 @click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True, help='Input the file/folder name.')
+@click.option('--no_output', '-n',  default=False, required=False, is_flag=True, help='Disables output for filling dictionary only')
 @click.option('-v', '--verbose', default=False, required=False, is_flag=True, help='Enables verbose mode')
-def main(input_path, verbose):
+@click.version_option()
+def main(input_path, no_output, verbose):
     """My Tool does one thing, and one thing well."""
     if os.path.isdir(input_path):
         with click.progressbar(os.listdir(input_path), label='Annotating the files') as bar:
             for f in bar:
                 pathname = os.path.join(input_path, f)
-                check_and_process(pathname, verbose)
+                check_and_process(pathname, verbose, no_output)
     else:
-        check_and_process(input_path, verbose)
+        check_and_process(input_path, verbose, no_output)
 
 
 
