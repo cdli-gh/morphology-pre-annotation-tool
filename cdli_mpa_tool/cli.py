@@ -8,9 +8,9 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME_DIR = os.environ['HOME']
 if HOME_DIR:
     FOLDER = os.path.join(HOME_DIR, '.cdlimpatool')
-    JSON_PATH = os.path.join(FOLDER, 'annotated_morph_dict.json')
 else:
-    JSON_PATH = os.path.join(ROOT_DIR, 'annotated_morph_dict.json')
+    FOLDER = os.path.join(ROOT_DIR, '.cdlimpatool')
+JSON_PATH = os.path.join(FOLDER, 'annotated_morph_dict.json')
 
 
 def load_annotations(infile, verbose=False):
@@ -55,8 +55,10 @@ def line_process(line, loaded_dict):
 
 def file_process(infile, verbose=False, no_output=False):
     loaded_dict = load_annotations(JSON_PATH, verbose)
-    infile_seperated = infile.split('.')
-    outfile_name = ".".join(infile_seperated[:-1] + ['tsv'])
+    outfolder = os.path.join(os.path.dirname(infile), 'output')
+    if not no_output and not os.path.exists(outfolder):
+        os.makedirs(outfolder)
+    outfile_name = os.path.join(outfolder, os.path.basename(infile))
     if verbose and not no_output:
         click.echo('Writing in {0}.'.format(outfile_name))
     with codecs.open(infile, 'r', 'utf-8') as f:
