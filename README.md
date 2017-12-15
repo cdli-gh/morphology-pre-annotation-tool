@@ -63,9 +63,18 @@ To run it on folder:
 
     $ cdli-mpa-tool -i ./resources    
     
+
+To feed the dictionary with an annotated file, use the --no_output switch :
+
+    $ cdli-mpa-tool --no-output ./resources    
+    
+    
+
 If you don't give arguments, it will prompt for the path.
 
-The annotated dictionary is stored as [json](./cdli_mpa_tool/annotated_morph_dict.json) and it gets updated every time, 
+The annotated dictionary is stored as [json] in the home folder of the user which runs Python (will be root if you installed Python at the system level)
+
+(./cdli_mpa_tool/annotated_morph_dict.json) and it gets updated every time, 
 so you can copy it from the path and share it.
 
 Its structure is (FORM: [[SEGM1	XPOSTAG1], [SEGM2	XPOSTAG2]]):
