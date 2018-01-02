@@ -4,13 +4,15 @@ import codecs
 import os
 from stat import *
 
+DICT_JSON = 'annotated_morph_dict_v2.json'
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME_DIR = os.environ['HOME']
 if HOME_DIR:
     FOLDER = os.path.join(HOME_DIR, '.cdlimpatool')
 else:
     FOLDER = os.path.join(ROOT_DIR, '.cdlimpatool')
-JSON_PATH = os.path.join(FOLDER, 'annotated_morph_dict.json')
+JSON_PATH = os.path.join(FOLDER, DICT_JSON)
 
 
 def load_annotations(infile, verbose=False):
@@ -45,9 +47,18 @@ def line_process(line, loaded_dict):
             if form not in loaded_dict:
                 loaded_dict[form] = []
             if len(line_splitted) > 2:
-                loaded_dict[form].append(line_splitted[2:])
+                if line_splitted[2:] in list(map(lambda x: x['annotation'], loaded_dict[form])):
+                    for i in range(len(loaded_dict[form])):
+                        if loaded_dict[form][i]['annotation'] == line_splitted[2:]:
+                            loaded_dict[form][i]['count'] += 1
+                    loaded_dict[form] = sorted(loaded_dict[form], key=lambda k: k['count'], reverse=True)
+                else:
+                    annotation_dict = {'annotation': line_splitted[2:], 'count': 1}
+                    loaded_dict[form].append(annotation_dict)
             elif len(loaded_dict[form]) >= 1:
-                line_next = loaded_dict[form][0]
+                line_next = []
+                for i in range(len(loaded_dict[form])):
+                    line_next.extend(loaded_dict[form][i]['annotation'])
                 line_splitted += line_next
                 line = '\t'.join(line_splitted)
     return line + '\n'
