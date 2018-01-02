@@ -64,9 +64,13 @@ To run it on folder:
     $ cdli-mpa-tool -i ./resources    
     
 
-To feed the dictionary with an annotated file, use the --no_output switch :
+To feed the dictionary with an annotated file, use the --no_output switch to produce no annotated outputs:
 
-    $ cdli-mpa-tool --no-output ./resources    
+    $ cdli-mpa-tool --no_output ./resources    
+    
+To see the console messages of the tool, use --verbose switch
+
+    $ cdli-mpa-tool -i ./resources  --verbose
     
     
 
@@ -77,11 +81,15 @@ The annotated dictionary is stored as [json] in the home folder of the user whic
 (./cdli_mpa_tool/annotated_morph_dict.json) and it gets updated every time, 
 so you can copy it from the path and share it.
 
-Its structure is (FORM: [[SEGM1	XPOSTAG1], [SEGM2	XPOSTAG2]]):
+Its structure is (FORM: [ {"annotation" : [SEGM1	XPOSTAG1], "count" : COUNT1} , {"annotation" : [SEGM2	XPOSTAG2], "count" : COUNT2} ]):
 
 ```json
 {
-  "pisan-dub-ba": [["bisajdubak", "N"]], 
+  "pisan-dub-ba": [
+    { "annotation" : ["bisajdubak", "N"],
+      "count" : 1
+    }
+  ],
   "hu-hu-nu-ri{ki}": []
 }
 ```
