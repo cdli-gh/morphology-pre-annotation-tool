@@ -16,6 +16,7 @@ def check_and_process(pathname, verbose=False, no_output=False):
             click.echo('Processing {0}.'.format(pathname))
         file_process(pathname, verbose, no_output)
 
+
 @click.command()
 @click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True,
               help='Input the file/folder name.')

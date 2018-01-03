@@ -74,14 +74,17 @@ def file_process(infile, verbose=False, no_output=False):
         click.echo('Writing in {0}.'.format(outfile_name))
     with codecs.open(infile, 'r', 'utf-8') as f:
         lines = f.readlines()
-        with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
+        if no_output:
             for line in lines:
-                line = line_process(line, loaded_dict)
-                if not no_output:
-                    try:
-                        f1.writelines(line)
-                    except Exception:
-                        click.echo('Could not write the following line. {0}.'.format(line))
+                line_process(line, loaded_dict)
+        else:
+                with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
+                    for line in lines:
+                        line = line_process(line, loaded_dict)
+                        try:
+                            f1.writelines(line)
+                        except Exception:
+                            click.echo('Could not write the following line. {0}.'.format(line))
     store_annotations(JSON_PATH, loaded_dict, verbose)
 
 

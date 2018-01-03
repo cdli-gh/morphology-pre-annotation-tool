@@ -66,7 +66,7 @@ To run it on folder:
 
 To feed the dictionary with an annotated file, use the --no_output switch to produce no annotated outputs:
 
-    $ cdli-mpa-tool --no_output ./resources    
+    $ cdli-mpa-tool --no_output -i ./resources    
     
 To see the console messages of the tool, use --verbose switch
 
