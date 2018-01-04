@@ -1,13 +1,13 @@
 #new_text=P115087
 # ID	FORM	SEGM	XPOSTAG	HEAD	DEPREL	MISC
-o.1.1	pisan-dub-ba	bisajdubak	N
-o.2.1	tag-tag-ga	tag-tag-a	V.
+o.1.1	pisan-dub-ba
+o.2.1	tag-tag-ga
 o.2.2	udu	udu	N
-o.2.3	gukkal-ka	gukkal-ak-ak	N.GEN.GEN
-o.2.4	zu2-si-ka	zusi-ak-ak	N.GEN.GEN
+o.2.3	gukkal-ka
+o.2.4	zu2-si-ka
 o.3.1	gir2-su{ki}-ta	girsu{ki}-ta	SN.ABL
 o.4.1	gu2-ab-ba{ki}-sze3	guabba{ki}-sze	SN.TERM
-r.1.1	i3-gal2	i-gal-ø	FIN.V.3-SG-S	i-jal	FIN.V
+r.1.1	i3-gal2	i-gal-ø	FIN.V.3-SG-S
 r.2.1	mu	mu	N
-r.2.2	hu-hu-nu-ri{ki}	huhunuri{ki}-ø	SN.ABS
-r.2.3	ba#-hul#	ba-hul-ø	MID.V.3-SG-S
+r.2.2	hu-hu-nu-ri{ki}
+r.2.3	ba#-hul#

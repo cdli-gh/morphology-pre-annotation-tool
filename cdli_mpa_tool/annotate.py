@@ -47,13 +47,17 @@ def line_process(line, loaded_dict):
             if form not in loaded_dict:
                 loaded_dict[form] = []
             if len(line_splitted) > 2:
-                if line_splitted[2:] in list(map(lambda x: x['annotation'], loaded_dict[form])):
+                if len(line_splitted) > 4:
+                    annotated_value = line_splitted[2:4]
+                else:
+                    annotated_value = line_splitted[2:]
+                if annotated_value in list(map(lambda x: x['annotation'], loaded_dict[form])):
                     for i in range(len(loaded_dict[form])):
-                        if loaded_dict[form][i]['annotation'] == line_splitted[2:]:
+                        if loaded_dict[form][i]['annotation'] == annotated_value:
                             loaded_dict[form][i]['count'] += 1
                     loaded_dict[form] = sorted(loaded_dict[form], key=lambda k: k['count'], reverse=True)
                 else:
-                    annotation_dict = {'annotation': line_splitted[2:], 'count': 1}
+                    annotation_dict = {'annotation': annotated_value, 'count': 1}
                     loaded_dict[form].append(annotation_dict)
             elif len(loaded_dict[form]) >= 1:
                 line_next = []

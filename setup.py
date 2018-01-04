@@ -7,7 +7,7 @@ dependencies = ['click']
 
 setup(
     name='cdlimpatool',
-    version='0.2.1',
+    version='0.2.2',
     url='https://github.com/cdli-gh/morphology-pre-annotation-tool',
     license='BSD',
     author='Jayanth',
