@@ -53,24 +53,24 @@ Or you can also do
 
 To use it:
 
-    $ cdli-mpa-tool --help
+    $ mpat --help
     
 To run it on file:
     
-    $ cdli-mpa-tool -i ./resources/P115087.conll 
+    $ mpat -i ./resources/P115087.conll
     
 To run it on folder:
 
-    $ cdli-mpa-tool -i ./resources    
+    $ mpat -i ./resources
     
 
 To feed the dictionary with an annotated file, use the --no_output switch to produce no annotated outputs:
 
-    $ cdli-mpa-tool --no_output -i ./resources    
+    $ mpat --no_output -i ./resources
     
 To see the console messages of the tool, use --verbose switch
 
-    $ cdli-mpa-tool -i ./resources  --verbose
+    $ mpat -i ./resources  --verbose
     
     
 

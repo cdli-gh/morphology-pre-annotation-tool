@@ -7,7 +7,7 @@ dependencies = ['click']
 
 setup(
     name='cdlimpatool',
-    version='0.2.2',
+    version='0.2.3',
     url='https://github.com/cdli-gh/morphology-pre-annotation-tool',
     license='BSD',
     author='Jayanth',
@@ -21,7 +21,7 @@ setup(
     install_requires=dependencies,
     entry_points={
         'console_scripts': [
-            'cdli-mpa-tool = cdli_mpa_tool.cli:main',
+            'mpat = cdli_mpa_tool.cli:main',
         ],
     },
     classifiers=[
