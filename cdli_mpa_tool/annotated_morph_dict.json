@@ -1,34 +1,198 @@
 {
-  "sipa": [],
-  "es3-sa2-ab-du": [],
-  "nig2-ka9-ak": [],
-  "u3": [],
-  "nig2-e3-a": [],
-  "ARAD2-mu": [],
-  "gir2-su{ki}-ta": [],
-  "gukkal-ka": [],
-  "unu3": [],
-  "si-i3-tum": [],
-  "giri3": [],
-  "dub": [],
-  "tag-tag-ga": [],
-  "unu3-de3": [],
-  "ba-hun": [],
-  "pisan-dub-ba": [
-    { "annotation" : ["bisajdubak", "N"],
-      "count" : 1
+  "sipa": [
+    {
+      "count": 9,
+      "annotation": [
+        "sipad",
+        "N"
+      ]
     }
   ],
+  "es3-sa2-ab-du": [
+    {
+      "count": 3,
+      "annotation": [
+        "eszabdu",
+        "N"
+      ]
+    }
+  ],
+  "nig2-ka9-ak": [
+    {
+      "count": 3,
+      "annotation": [
+        "nig.SZID-ak",
+        "N.GEN"
+      ]
+    }
+  ],
+  "u3": [
+    {
+      "count": 3,
+      "annotation": [
+        "u",
+        "CNJ"
+      ]
+    }
+  ],
+  "nig2-e3-a": [],
+  "ARAD2-mu": [
+    {
+      "count": 3,
+      "annotation": [
+        "ARAD-mu",
+        "PN"
+      ]
+    }
+  ],
+  "gir2-su{ki}-ta": [
+    {
+      "count": 3,
+      "annotation": [
+        "girsu{ki}-ta",
+        "SN.ABL"
+      ]
+    }
+  ],
+  "gukkal-ka": [],
+  "unu3": [
+    {
+      "count": 3,
+      "annotation": [
+        "unud",
+        "N"
+      ]
+    }
+  ],
+  "si-i3-tum": [
+    {
+      "count": 3,
+      "annotation": [
+        "situm",
+        "N"
+      ]
+    }
+  ],
+  "giri3": [
+    {
+      "count": 3,
+      "annotation": [
+        "giri",
+        "N"
+      ]
+    }
+  ],
+  "dub": [
+    {
+      "count": 3,
+      "annotation": [
+        "dub",
+        "N"
+      ]
+    }
+  ],
+  "tag-tag-ga": [],
+  "unu3-de3": [
+    {
+      "count": 3,
+      "annotation": [
+        "unud-e",
+        "N."
+      ]
+    }
+  ],
+  "ba-hun": [
+    {
+      "count": 3,
+      "annotation": [
+        "ba-hun-\u00f8",
+        "MID.V.3-SG-P"
+      ]
+    }
+  ],
+  "pisan-dub-ba": [],
   "hu-hu-nu-ri{ki}": [],
-  "gu2-ab-ba{ki}-sze3": [],
-  "udu": [],
-  "gukkal": [],
-  "i3-gal2": [],
+  "gu2-ab-ba{ki}-sze3": [
+    {
+      "count": 3,
+      "annotation": [
+        "guabba{ki}-sze",
+        "SN.TERM"
+      ]
+    }
+  ],
+  "udu": [
+    {
+      "count": 3,
+      "annotation": [
+        "udu",
+        "N"
+      ]
+    }
+  ],
+  "gukkal": [
+    {
+      "count": 3,
+      "annotation": [
+        "gukkal",
+        "N"
+      ]
+    }
+  ],
+  "i3-gal2": [
+    {
+      "count": 3,
+      "annotation": [
+        "i-gal-\u00f8",
+        "FIN.V.3-SG-S"
+      ]
+    }
+  ],
   "zu2-si-ka": [],
-  "gid2-da-bi": [],
-  "la2-ia3": [],
+  "gid2-da-bi": [
+    {
+      "count": 3,
+      "annotation": [
+        "gid-ak-bi",
+        "N.GEN.3-SG-NH-POSS"
+      ]
+    }
+  ],
+  "la2-ia3": [
+    {
+      "count": 3,
+      "annotation": [
+        "la\u2019u",
+        "N"
+      ]
+    }
+  ],
   "ba#-hul#": [],
-  "mu": [],
-  "pisan-[dub-ba]": [],
-  "en-mah-gal-an#-na": []
+  "mu": [
+    {
+      "count": 3,
+      "annotation": [
+        "mu",
+        "N"
+      ]
+    }
+  ],
+  "pisan-[dub-ba]": [
+    {
+      "count": 3,
+      "annotation": [
+        "bisajdubak",
+        "N"
+      ]
+    }
+  ],
+  "en-mah-gal-an#-na": [
+    {
+      "count": 3,
+      "annotation": [
+        "enmahgalana-\u00f8",
+        "PN.ABS"
+      ]
+    }
+  ]
 }

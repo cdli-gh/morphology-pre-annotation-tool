@@ -64,11 +64,15 @@ To run it on folder:
     $ mpat -i ./resources
     
 
-To feed the dictionary with an annotated file, use the --no_output switch to produce no annotated outputs:
+To feed the dictionary with an annotated file, use the --no_output/-n switch to produce no annotated outputs:
 
     $ mpat --no_output -i ./resources
     
-To see the console messages of the tool, use --verbose switch
+To check the format of conll tool, use the --check/-c switch:
+
+    $ mpat -c -i ./resources 
+    
+To see the console messages of the tool, use --verbose/-v switch:
 
     $ mpat -i ./resources  --verbose
     
