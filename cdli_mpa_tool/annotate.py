@@ -1,6 +1,7 @@
 import codecs
 import json
 import os
+import shutil
 
 import click
 
@@ -23,6 +24,16 @@ class CONLLAnnotator:
         self.no_output = no_output
         self.loaded_dict = {}
 
+    @staticmethod
+    def delete_folder():
+        click.echo(
+            '\nWarning: Deleting annotation json dictionary file at {0}.'.format(FOLDER))
+        if not os.path.exists(FOLDER):
+            click.echo(
+                '\nError: Folder {0} does not exist. The tool will create folder during first time usage'.format(FOLDER))
+        else:
+            shutil.rmtree(FOLDER)
+
     def __load_annotations(self):
         if self.verbose:
             click.echo('\nInfo: Loading annotations from {0}.'.format(self.jsonfile))
@@ -31,7 +42,7 @@ class CONLLAnnotator:
                 self.loaded_dict = json.load(jsonfile)
         except IOError:
             click.echo(
-                '\nWarning: First time usage : creating annotation json dictionary file as {0}.'.format(self.infile))
+                '\nWarning: First time usage : creating annotation json dictionary file as {0}.'.format(self.jsonfile))
             if not os.path.exists(FOLDER):
                 os.makedirs(FOLDER)
             self.loaded_dict = {}

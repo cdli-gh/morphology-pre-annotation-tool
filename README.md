@@ -66,7 +66,11 @@ To run it on folder:
 
 To feed the dictionary with an annotated file, use the --no_output/-n switch to produce no annotated outputs:
 
-    $ mpat --no_output -i ./resources
+    $ mpat -n -i ./resources
+    
+To delete the stored dictionary, use the --delete_dict/-d switch:
+
+    $ mpat -d
     
 To check the format of conll tool, use the --check/-c switch:
 
@@ -74,10 +78,8 @@ To check the format of conll tool, use the --check/-c switch:
     
 To see the console messages of the tool, use --verbose/-v switch:
 
-    $ mpat -i ./resources  --verbose
+    $ mpat -i ./resources  -v
     
-    
-
 If you don't give arguments, it will prompt for the path.
 
 The annotated dictionary is stored as [json] in the home folder of the user which runs Python (will be root if you installed Python at the system level)

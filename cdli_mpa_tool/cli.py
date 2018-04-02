@@ -20,11 +20,20 @@ def check_and_process(pathname, no_output=False, check=False, verbose=False):
         checker.check()
 
 
+def delete_dictionary(ctx, param, value):
+    CONLLAnnotator.delete_folder()
+    if not value or ctx.resilient_parsing:
+        return
+    ctx.exit()
+
+
 @click.command()
 @click.option('--input_path', '-i', type=click.Path(exists=True, writable=True), prompt=True, required=True,
               help='Input the file/folder name.')
 @click.option('--no_output', '-n', default=False, required=False, is_flag=True,
               help='Disables output for filling dictionary only')
+@click.option('--delete_dict', '-d', is_flag=True, callback=delete_dictionary,
+              expose_value=False, is_eager=True, help='Deletes the dictionary')
 @click.option('--check', '-c', default=False, required=False, is_flag=True, help='Checks the format of the conll file.')
 @click.option('--verbose', '-v', default=False, required=False, is_flag=True, help='Enables verbose mode')
 @click.version_option()
