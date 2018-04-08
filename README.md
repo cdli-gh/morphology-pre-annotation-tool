@@ -65,7 +65,7 @@ To run it on folder:
 
 To make sure that underscore is added for missing annotations in the dictionary, use the --add_underscores/-a switch:
 
-    $ mpat -i -a ./resources
+    $ mpat -i ./resources -a
 
 To feed the dictionary with an annotated file, use the --no_output/-n switch to produce no annotated outputs:
 
