@@ -62,6 +62,8 @@ To run it on file:
 To run it on folder:
 
     $ mpat -i ./resources
+    
+The default behaviour is the annotation, so if you just input the path, it will run annotator. To do custom following tasks, use their corresponding flags.
 
 To just run the formattor to format the conll files for next Conll-U convertor, use the --format_conll/-f switch:
 
@@ -74,6 +76,8 @@ To just feed the dictionary with an annotated file, use the --no_output/-n switc
 To just check the format of conll tool, use the --check/-c switch:
 
     $ mpat -c -i ./resources
+    
+Note that checker does not output any file, nor it changes the state of the files so, by default it will run always for the input path files.   
 
 To delete the stored dictionary, use the --delete_dict/-d switch:
 
