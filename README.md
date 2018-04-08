@@ -63,21 +63,21 @@ To run it on folder:
 
     $ mpat -i ./resources
 
-To make sure that underscore is added for missing annotations in the dictionary, use the --add_underscores/-a switch:
+To just run the formattor to format the conll files for next Conll-U convertor, use the --format_conll/-f switch:
 
-    $ mpat -i ./resources -a
+    $ mpat -f -i ./resources
 
-To feed the dictionary with an annotated file, use the --no_output/-n switch to produce no annotated outputs:
+To just feed the dictionary with an annotated file, use the --no_output/-n switch to produce no annotated outputs:
 
     $ mpat -n -i ./resources
     
+To just check the format of conll tool, use the --check/-c switch:
+
+    $ mpat -c -i ./resources
+
 To delete the stored dictionary, use the --delete_dict/-d switch:
 
     $ mpat -d
-    
-To check the format of conll tool, use the --check/-c switch:
-
-    $ mpat -c -i ./resources 
     
 To see the console messages of the tool, use --verbose/-v switch:
 
