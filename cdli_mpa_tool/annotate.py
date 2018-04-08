@@ -17,11 +17,12 @@ JSON_PATH = os.path.join(FOLDER, DICT_JSON)
 
 
 class CONLLAnnotator:
-    def __init__(self, pathname, verbose=False, no_output=False):
+    def __init__(self, pathname, verbose=False, no_output=False, add_underscores=False):
         self.infile = pathname
         self.jsonfile = JSON_PATH
         self.verbose = verbose
         self.no_output = no_output
+        self.add_underscores = add_underscores
         self.loaded_dict = {}
 
     @staticmethod
@@ -74,13 +75,19 @@ class CONLLAnnotator:
                             if self.loaded_dict[form][i]['annotation'] == annotated_value:
                                 self.loaded_dict[form][i]['count'] += 1
                         self.loaded_dict[form] = sorted(self.loaded_dict[form], key=lambda k: k['count'], reverse=True)
-                    else:
+                    elif annotated_value[0] != '_':
                         annotation_dict = {'annotation': annotated_value, 'count': 1}
                         self.loaded_dict[form].append(annotation_dict)
+                    else:
+                        pass
                 elif len(self.loaded_dict[form]) >= 1:
                     line_next = []
                     for i in range(len(self.loaded_dict[form])):
                         line_next.extend(self.loaded_dict[form][i]['annotation'])
+                    line_splitted += line_next
+                    line = '\t'.join(line_splitted)
+                elif self.add_underscores:
+                    line_next = ['_', '_']
                     line_splitted += line_next
                     line = '\t'.join(line_splitted)
         return line + '\n'
