@@ -77,7 +77,7 @@ To just check the format of conll tool, use the --check/-c switch:
 
     $ mpat -c -i ./resources
     
-Note that checker does not output any file, nor it changes the state of the files so, by default it will run always for the input path files.   
+Note that checker does not output any file, nor it changes the state of the files.
 
 To delete the stored dictionary, use the --delete_dict/-d switch:
 

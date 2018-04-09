@@ -17,12 +17,12 @@ def check_and_process(pathname, no_output=False, check=False, format_conll=False
         if format_conll:
             formattor = CONLLFormattor(pathname, verbose)
             formattor.process()
+        elif check:
+            checker = CONLChecker(pathname, verbose)
+            checker.check()
         else:
-            if not check:
-                annotator = CONLLAnnotator(pathname, verbose, no_output)
-                annotator.process()
-        checker = CONLChecker(pathname, verbose)
-        checker.check()
+            annotator = CONLLAnnotator(pathname, verbose, no_output)
+            annotator.process()
 
 
 def delete_dictionary(ctx, param, value):
