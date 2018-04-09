@@ -31,7 +31,7 @@ class CONLChecker:
             if len(self.IDlist) != len(set(self.IDlist)):
                 click.echo('\nError: File {0} : IDs generated are not unique'.format(self.inputFileName))
                 duplicates = [item for item, count in collections.Counter(self.IDlist).items() if count > 1]
-                click.echo('\n Duplicate IDs : {0).'.format(duplicates))
+                click.echo('\n Duplicate IDs : {0}.'.format(duplicates))
                 self.iscorrect = False
             if self.iscorrect:
                 click.echo('\nInfo: The file {0} has correct format.'.format(self.inputFileName))
