@@ -14,8 +14,8 @@ class CONLLFormattor:
         line = line.strip()
         if line[0] != '#':
             line_splitted = line.split('\t')
-            line_splitted = map(lambda x: x.strip(), line_splitted)
-            line_splitted = map(lambda x: '_' if x == '' else x, line_splitted)
+            line_splitted = list(map(lambda x: x.strip(), line_splitted))
+            line_splitted = list(map(lambda x: '_' if x == '' else x, line_splitted))
             line_splitted = line_splitted[:4]
             while len(line_splitted) != 7:
                 line_splitted.extend(['_'])
