@@ -54,7 +54,7 @@ class CONLChecker:
                 '\nError: The xpostag dot count {0} in line number {1} in file {2} does not match with segm dash count {3}.'
                     .format(count_dot, linenumber, self.inputFileName, count_dash))
             self.iscorrect = False
-        xpostag_pattern = r"^(([A-Z0-9]+)(\-([A-Z0-9]+))*)(\.([A-Z0-9]+)(\-([A-Z0-9]+))*)+|[A-Z]+$"
+        xpostag_pattern = u"^(([A-Z0-9]+)(\-([A-Z0-9]+))*)(\.([A-Z0-9]+)(\-([A-Z0-9]+))*)+|[A-Z]+$"
         # check xpostag
         if not re.compile(xpostag_pattern).match(xpostag):
             click.echo(
@@ -115,7 +115,7 @@ class CONLChecker:
                                         NOUN_MORPHS))
                         self.iscorrect = False
         # check segm
-        segm_pattern = r"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9\(\)]+\[[a-z0-9]*\]((\-[a-z0-9]+)|(\[\-[a-z0-9]+\])|(\[\-ø\]))*$"
+        segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9\(\)]+\[[a-z0-9]*\]((\-[a-z0-9]+)|(\[\-[a-z0-9]+\])|(\[\-ø\]))*$"
         # check xpostag
         if not re.compile(segm_pattern).match(segm):
             click.echo(
