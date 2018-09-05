@@ -2,11 +2,13 @@ import codecs
 import json
 import os
 import shutil
-
+import platform
 import click
 
+# Workaround for MPAT missing "HOME" env. var. when running on Windows 
+if platform.system()=='Windows' and "HOME" not in os.environ.keys():
+    os.environ["HOME"] = os.environ["USERPROFILE"]
 DICT_JSON = 'annotated_morph_dict_v2.json'
-
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME_DIR = os.environ['HOME']
 if HOME_DIR:
@@ -14,7 +16,6 @@ if HOME_DIR:
 else:
     FOLDER = os.path.join(ROOT_DIR, '.cdlimpatool')
 JSON_PATH = os.path.join(FOLDER, DICT_JSON)
-
 
 class CONLLAnnotator:
     def __init__(self, pathname, verbose=False, no_output=False, add_underscores=False):
