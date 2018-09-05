@@ -115,8 +115,7 @@ class CONLChecker:
                                         NOUN_MORPHS))
                         self.iscorrect = False
         # check segm
-        segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9\(\)]+\[[a-z0-9]*\]((\-[a-z0-9]+)|(\[\-[a-z0-9]+\])|(\[\-ø\]))*$"
-        # check xpostag
+        segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9\(\)\\@\/']+\[~*[a-z0-9_]*\]((\-'*[a-z0-9]+)|(\[\-[a-z0-9]+\])|(\[\-ø\]))*$"
         if not re.compile(segm_pattern).match(segm):
             click.echo(
                 u'\nError: The segm {0} in line number {1} in file {2} does not follow the format "{3}".'
