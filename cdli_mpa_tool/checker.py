@@ -124,26 +124,32 @@ class CONLChecker:
             self.iscorrect = False
 
     def check_line(self, linenumber, line):
-        line_splitted = line.split('\t')
-        if len(line_splitted) < 4:
+        if len(line) == 0:
             click.echo(
-                u"\nError: No field should be empty in file {0} linenumber {1} (An underscore should be added in fields where we can't add something)."
+                u"\nWarning: Empty line in file {0} linenumber {1}."
                     .format(self.inputFileName, linenumber))
             self.iscorrect = False
         else:
-            segm = line_splitted[2]
-            xpostag = line_splitted[3]
-            self.__check_segm_xpostag(segm, xpostag, linenumber)
-        if len(line_splitted) > 0:
-            id_form = line_splitted[0]
-            id_pattern = r"^e?(o|r|t|b|l|ri|(s?[a-z]?[0-9]?))\.((col|b)[0-9]'?\.)?[0-9]+'?\.[0-9]+$"
-            if not re.compile(id_pattern).match(id_form):
+            line_splitted = line.split('\t')
+            if len(line_splitted) < 4:
                 click.echo(
-                    u'\nError: The id {0} in line number {1} in file {2} does not follow the Conll format "{3}".'
-                        .format(id_form, linenumber, self.inputFileName,
-                                id_pattern))
+                    u"\nError: No field should be empty in file {0} linenumber {1} (An underscore should be added in fields where we can't add something)."
+                        .format(self.inputFileName, linenumber))
                 self.iscorrect = False
-            self.IDlist.append(id_form)
+            else:
+                segm = line_splitted[2]
+                xpostag = line_splitted[3]
+                self.__check_segm_xpostag(segm, xpostag, linenumber)
+            if len(line_splitted) > 0:
+                id_form = line_splitted[0]
+                id_pattern = r"^e?(o|r|t|b|l|ri|(s?[a-z]?[0-9]?))\.((col|b)[0-9]'?\.)?[0-9]+'?\.[0-9]+$"
+                if not re.compile(id_pattern).match(id_form):
+                    click.echo(
+                        u'\nError: The id {0} in line number {1} in file {2} does not follow the Conll format "{3}".'
+                            .format(id_form, linenumber, self.inputFileName,
+                                    id_pattern))
+                    self.iscorrect = False
+                self.IDlist.append(id_form)
 
     def __parse(self, linenumber, line):
         p_pattern = r"^#new_text=[a-zA-Z0-9]+\s*$"

@@ -9,10 +9,9 @@ class CONLLFormattor:
         self.infile = pathname
         self.verbose = verbose
 
-    @staticmethod
-    def __line_process(line):
+    def __line_process(self, linenumber, line):
         line = line.strip()
-        if line[0] != '#':
+        if len(line) > 0 and line[0] != '#':
             line_splitted = line.split('\t')
             line_splitted = list(map(lambda x: x.strip(), line_splitted))
             line_splitted = list(map(lambda x: '_' if x == '' else x, line_splitted))
@@ -20,6 +19,10 @@ class CONLLFormattor:
             while len(line_splitted) != 7:
                 line_splitted.extend(['_'])
             line = '\t'.join(line_splitted)
+        else:
+            if self.verbose and linenumber > 2:
+                click.echo('\nWarning: Empty line.')
+            pass
         return line + '\n'
 
     def __file_process(self):
@@ -30,10 +33,9 @@ class CONLLFormattor:
         if self.verbose:
             click.echo('\nInfo: Writing in {0}.'.format(outfile_name))
         with codecs.open(self.infile, 'r', 'utf-8') as f:
-            lines = f.readlines()
             with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
-                for line in lines:
-                    line = self.__line_process(line)
+                for (i, line) in enumerate(f):
+                    line = self.__line_process(i+1, line)
                     try:
                         f1.writelines(line)
                     except IOError:

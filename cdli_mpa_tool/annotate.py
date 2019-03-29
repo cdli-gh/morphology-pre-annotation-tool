@@ -59,7 +59,7 @@ class CONLLAnnotator:
         with codecs.open(self.jsonfile, 'w', 'utf-8') as jsonfile:
             json.dump(self.loaded_dict, jsonfile, indent=2)
 
-    def __line_process(self, line):
+    def __line_process(self, linenumber, line):
         line = line.strip()
         if len(line) > 0 and line[0] != '#':
             line_splitted = line.split('\t')
@@ -93,7 +93,8 @@ class CONLLAnnotator:
                     line_splitted += line_next
                     line = '\t'.join(line_splitted)
         else:
-            click.echo('\nWarning: Empty line.')
+            if self.verbose and linenumber > 2:
+                click.echo('\nWarning: Empty line or Comment.')
             pass
         return line + '\n'
 
@@ -105,14 +106,13 @@ class CONLLAnnotator:
         if self.verbose and not self.no_output:
             click.echo('\nInfo: Writing in {0}.'.format(outfile_name))
         with codecs.open(self.infile, 'r', 'utf-8') as f:
-            lines = f.readlines()
             if self.no_output:
-                for line in lines:
-                    self.__line_process(line)
+                for (i, line) in enumerate(f):
+                    self.__line_process(i+1, line)
             else:
                 with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
-                    for line in lines:
-                        line = self.__line_process(line)
+                    for (i, line) in enumerate(f):
+                        line = self.__line_process(i+1, line)
                         try:
                             f1.writelines(line)
                         except IOError:
