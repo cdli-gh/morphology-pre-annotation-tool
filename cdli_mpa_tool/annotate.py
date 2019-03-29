@@ -17,6 +17,7 @@ else:
     FOLDER = os.path.join(ROOT_DIR, '.cdlimpatool')
 JSON_PATH = os.path.join(FOLDER, DICT_JSON)
 
+
 class CONLLAnnotator:
     def __init__(self, pathname, verbose=False, no_output=False, add_underscores=False):
         self.infile = pathname
@@ -60,7 +61,7 @@ class CONLLAnnotator:
 
     def __line_process(self, line):
         line = line.strip()
-        if line[0] != '#':
+        if len(line) > 0 and line[0] != '#':
             line_splitted = line.split('\t')
             if len(line_splitted) >= 2:
                 form = line_splitted[1]
@@ -91,6 +92,9 @@ class CONLLAnnotator:
                     line_next = ['_', '_']
                     line_splitted += line_next
                     line = '\t'.join(line_splitted)
+        else:
+            click.echo('\nWarning: Empty line.')
+            pass
         return line + '\n'
 
     def __file_process(self):
