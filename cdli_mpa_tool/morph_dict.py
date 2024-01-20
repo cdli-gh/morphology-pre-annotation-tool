@@ -61,6 +61,7 @@ VERB_SUFFIX = ["1-SG-A",
                "3-PL-P",
                "3-PL",
                "3-PL-A",
+               "PT",
                "PF",
                "SUB",
                "PLEN"
@@ -77,14 +78,14 @@ VERB_PREFIX = ["NEG",
                "MOD5",
                "COOR",
                "VEN",
-               "VEN",
                "MID",
                "FIN",
                "FIN-LI",
                "FIN-L2",
                "FIN",
                "FIN-L2",
-               "FIN"
+               "FIN",
+               "NF"
                ]
 
 VERB_INFIX = ["3-NH",
