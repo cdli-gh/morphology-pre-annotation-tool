@@ -114,7 +114,7 @@ class CONLLAnnotator:
                     for (i, line) in enumerate(f):
                         # Detect the header line and prepend the automated annotation comment
                         if line.strip() == "# ID\tFORM\tSEGM\tXPOSTAG\tHEAD\tDEPREL\tMISC":
-                            automated_annotation_comment = "# automated annotation: POS; NE; lemmata; morph\n"
+                            automated_annotation_comment = "# automated_annotation: POS; NE; lemmata; morph\n"
                             f1.write(automated_annotation_comment)  # Write the comment line before the header
 
                         processed_line = self.__line_process(i + 1, line)  # Process the current line
