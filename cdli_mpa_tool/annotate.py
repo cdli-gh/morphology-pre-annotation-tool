@@ -5,7 +5,7 @@ import shutil
 import platform
 import click
 
-# Workaround for MPAT missing "HOME" env. var. when running on Windows 
+# Workaround for MPAT missing "HOME" env. var. when running on Windows
 if platform.system()=='Windows' and "HOME" not in os.environ.keys():
     os.environ["HOME"] = os.environ["USERPROFILE"]
 DICT_JSON = 'annotated_morph_dict_v2.json'
@@ -108,15 +108,20 @@ class CONLLAnnotator:
         with codecs.open(self.infile, 'r', 'utf-8') as f:
             if self.no_output:
                 for (i, line) in enumerate(f):
-                    self.__line_process(i+1, line)
+                    self.__line_process(i + 1, line)
             else:
                 with codecs.open(outfile_name, 'w+', 'utf-8') as f1:
                     for (i, line) in enumerate(f):
-                        line = self.__line_process(i+1, line)
+                        # Detect the header line and prepend the automated annotation comment
+                        if line.strip() == "# ID\tFORM\tSEGM\tXPOSTAG\tHEAD\tDEPREL\tMISC":
+                            automated_annotation_comment = "# automated annotation: POS; NE; lemmata; morph\n"
+                            f1.write(automated_annotation_comment)  # Write the comment line before the header
+
+                        processed_line = self.__line_process(i + 1, line)  # Process the current line
                         try:
-                            f1.writelines(line)
-                        except IOError:
-                            click.echo('\nError: Could not write the line {0} in file {1}.'.format(line, outfile_name))
+                            f1.write(processed_line)  # Write the processed (or original) line to the file
+                        except IOError as e:
+                            click.echo(f'\nError: Could not write the line to file {outfile_name}. Error: {e}')
 
     def process(self):
         self.__load_annotations()
