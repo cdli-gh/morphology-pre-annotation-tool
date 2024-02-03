@@ -154,17 +154,21 @@ class CONLChecker:
     def __parse(self, linenumber, line):
         p_pattern = r"^#new_text=[a-zA-Z0-9]+\s*$"
         heading_pattern = r"#\s+ID\s+FORM\s+SEGM\s+XPOSTAG\s+HEAD\s+DEPREL\s+MISC\s*"
+        automated_annotation_comment_pattern = r"^# automated annotation:.*$"
+    
         if linenumber == 1 and not re.compile(p_pattern).match(line):
             click.echo(
                 '\nError: The line number {0} in file {1} does not follow the Conll format "{2}".'
                     .format(linenumber, self.inputFileName, p_pattern))
             self.iscorrect = False
-        elif linenumber == 2 and not re.compile(heading_pattern).match(line):
-            click.echo(
-                '\nError: The line number {0} in file {1} does not follow the Conll format "{2}".'
-                    .format(linenumber, self.inputFileName, heading_pattern))
-            self.iscorrect = False
-        elif linenumber > 2:
-            self.check_line(linenumber, line)
-        else:
-            pass
+        elif linenumber >= 2:
+            # Check for automated annotation comment or heading pattern on or after line 2
+            if re.compile(automated_annotation_comment_pattern).match(line):
+                # It's an automated annotation comment, so just pass through
+                pass
+            elif re.compile(heading_pattern).match(line) and len(self.IDlist) == 0:
+                # It's the heading line and no IDs have been processed yet, indicating the header is in the correct position
+                pass
+            else:
+                # Process actual data lines or raise errors for incorrectly formatted lines
+                self.check_line(linenumber, line)
