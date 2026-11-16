@@ -6,6 +6,8 @@ import re
 
 from cdli_mpa_tool.morph_dict import *
 
+VERB_STEM_AND_NON_FINITE_SUFFIX = ["RDP", "PF", "PL", "ABS", "PT", "F"]
+
 
 class CONLChecker:
     def __init__(self, pathname, verbose):
@@ -47,8 +49,11 @@ class CONLChecker:
                     self.inputFileName))
 
     def __check_segm_xpostag(self, segm, xpostag, linenumber):
-        count_dash = segm.count('-')
-        count_dot = xpostag.count('.')
+        if xpostag == '_' and segm in ('_', '_[_]'):
+            return
+        segm_without_guide_word = re.sub(r"(?<=[A-Za-z0-9_)'])\[(?!-)[^\]]*\]", "[]", segm)
+        count_dash = segm_without_guide_word.count('-')
+        count_dot = len([tag for tag in xpostag.split('.') if tag != 'NF']) - 1
         if count_dot != count_dash:
             click.echo(
                 '\nWarning: The xpostag dot count {0} in line number {1} in file {2} does not match with segm dash count {3}.'
@@ -89,8 +94,11 @@ class CONLChecker:
             prefix_list = xpostag_splitted[:postag_pos]
             suffix_list = xpostag_splitted[(postag_pos + 1):]
             if isVerb:
+                verb_prefix_in_the_chain = re.compile(
+                    r"^([123]-(SG|PL)(-(H|NH))?(-(A|P|S|L3|OB))?|DAT|COM|ABL|TERM|L1|L2|L3)$")
+                takes_nominal_suffixes = 'NF' in prefix_list or 'SUB' in suffix_list
                 for p in prefix_list:
-                    if p not in VERB_PREFIX:
+                    if p not in VERB_PREFIX and not verb_prefix_in_the_chain.match(p):
                         click.echo(
                             u'\nError: The xpostag {0} in line number {1} in file {2} has a prefix {3} not in verb postag prefix list {4}.'
                                 .format(xpostag, linenumber,
@@ -98,6 +106,10 @@ class CONLChecker:
                                         VERB_PREFIX))
                         self.iscorrect = False
                 for s in suffix_list:
+                    if s in VERB_STEM_AND_NON_FINITE_SUFFIX:
+                        continue
+                    if takes_nominal_suffixes and s in NOUN_MORPHS:
+                        continue
                     if s not in VERB_SUFFIX:
                         click.echo(
                             u'\nError: The xpostag {0} in line number {1} in file {2} has a suffix {3} not in verb postag suffix list {4}.'
@@ -115,7 +127,7 @@ class CONLChecker:
                                         NOUN_MORPHS))
                         self.iscorrect = False
         # check segm
-        segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9\(\)\\@\/']+\[~*[a-z0-9_]*\]((\-'*[a-z0-9]+)|(\[\-[a-z0-9]+\])|(\[\-ø\]))*$"
+        segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9_\(\)\\@\/']+\[(~*[a-z0-9_\-]*|[A-Z][0-9]+)(\/\/[a-z0-9_\-]+)?\]((\-'*[a-z0-9]+)|(\[\-'*[a-z0-9]+\])|(\[\-ø\]))*$"
         if not re.compile(segm_pattern).match(segm):
             click.echo(
                 u'\nError: The segm {0} in line number {1} in file {2} does not follow the format "{3}".'
@@ -163,8 +175,7 @@ class CONLChecker:
             self.iscorrect = False
         elif linenumber >= 2:
             # Check for automated annotation comment or heading pattern on or after line 2
-            if re.compile(automated_annotation_comment_pattern).match(line):
-                # It's an automated annotation comment, so just pass through
+            if line.startswith('#') and not re.compile(heading_pattern).match(line):
                 pass
             elif re.compile(heading_pattern).match(line) and len(self.IDlist) == 0:
                 # It's the heading line and no IDs have been processed yet, indicating the header is in the correct position
