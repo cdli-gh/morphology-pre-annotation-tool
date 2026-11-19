@@ -128,7 +128,12 @@ class CONLChecker:
                         self.iscorrect = False
         # check segm
         segm_pattern = u"^(([a-z0-9]+)((\-[a-z0-9]+)|(\[\-[a-z0-9]+\]))*\-)?[A-Za-z0-9_\(\)\\@\/']+\[(~*[a-z0-9_\-]*|[A-Z][0-9]+)(\/\/[a-z0-9_\-]+)?\]((\-'*[a-z0-9]+)|(\[\-'*[a-z0-9]+\])|(\[\-ø\]))*$"
-        if not re.compile(segm_pattern).match(segm):
+        if segm.count('[') != segm.count(']'):
+            click.echo(
+                u'\nError: The segm {0} in line number {1} in file {2} has {3} opening and {4} closing square brackets.'
+                    .format(segm, linenumber, self.inputFileName, segm.count('['), segm.count(']')))
+            self.iscorrect = False
+        elif not re.compile(segm_pattern).match(segm):
             click.echo(
                 u'\nError: The segm {0} in line number {1} in file {2} does not follow the format "{3}".'
                     .format(segm, linenumber, self.inputFileName,
